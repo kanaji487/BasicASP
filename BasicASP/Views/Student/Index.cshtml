@@ -1,0 +1,77 @@
+﻿@model IEnumerable<BasicASP.Models.Student>;
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if (Model.Count() > 0)
+{
+    <h1 class="text-center">Computer subject test score</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Score</th>
+                <th scope="col">Grade</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var student in Model)
+            {
+                <tr>
+                    <th scope="row">@student.Id</th>
+                    <td>@student.Name</td>
+                    <td>@student.Score</td>
+                    @if (student.Score < 50)
+                    {
+                        <td>Fail</td>
+                    }
+                    else if (student.Score >= 50 && student.Score <= 54)
+                    {
+                        <td>D</td>
+                    }
+                    else if (student.Score >= 55 && student.Score <= 59)
+                    {
+                        <td>D+</td>
+                    }
+                    else if (student.Score >= 60 && student.Score <= 64)
+                    {
+                        <td>C</td>
+                    }
+                    else if (student.Score >= 65 && student.Score <= 69)
+                    {
+                        <td>C+</td>
+                    }
+                    else if (student.Score >= 70 && student.Score <= 74)
+                    {
+                        <td>B</td>
+                    }
+                    else if (student.Score >= 75 && student.Score <= 79)
+                    {
+                        <td>B+</td>
+                    }
+                    else
+                    {
+                        <td>A</td>
+                    }
+                    <td>
+                        <a class="btn btn-warning" asp-controller="Student" asp-action="Edit" asp-route-id="@student.Id">Edit</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" asp-controller="Student" asp-action="Delete" asp-route-id="@student.Id" onclick="return confirm('Do you really want to delete @student.Name ?')">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-secondary">
+        No data in database.
+    </div>
+}
+
+
